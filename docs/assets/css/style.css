@@ -1,1 +1,39 @@
+:root {
+  --dark: #202020;
+  --gray: #333533;
+  --yellow: #FFEE32;
+  --gold: #FFD100;
+  --text: #D6D6D6;
+}
 
+body {
+  background: var(--dark);
+  color: var(--text);
+  font-family: Arial, sans-serif;
+}
+
+.neon-title {
+  color: var(--yellow);
+  text-align: center;
+  text-shadow: 0 0 10px rgba(255, 238, 50, 0.5);
+}
+
+.portal-buttons {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 5rem;
+}
+
+.portal-btn {
+  padding: 2rem;
+  border: 3px solid var(--yellow);
+  border-radius: 15px;
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.3s;
+}
+
+.portal-btn:hover {
+  transform: scale(1.1);
+}
