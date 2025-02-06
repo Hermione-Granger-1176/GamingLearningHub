@@ -6,7 +6,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: peaceiris/actions-gh-pages@v3
+
+      - name: Generate Metadata
+        run: |
+          mkdir -p _data
+          echo "posts: []" > _data/posts.yml
+          find content -name meta.json -exec sh -c 'folder=$(dirname {}); echo "- title: $(jq -r .title $folder/meta.json)\n  date: $(jq -r .date $folder/meta.json)\n  category: $(jq -r .category $folder/meta.json)\n  tags: [$(jq -r .tags[] $folder/meta.json | sed "s/^/\"/;s/$/\"/" | tr "\n" "," | sed "s/,$//")]\n  description: $(jq -r .description $folder/meta.json)\n  url: $(cat $folder/url.txt)\n  folder: $(basename $folder)" >> _data/posts.yml' \;
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}  # Add this line
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs
+          force_orphan: true
